@@ -1,0 +1,11 @@
+img{
+    width: 100%;
+    min-height: 300px;
+    max-height: 600px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+div{
+    background-color: rgba(0, 0, 0, 0.2);
+}

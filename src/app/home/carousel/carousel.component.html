@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col">
+      <ngb-carousel *ngIf="carouselData">
+          <ng-template ngbSlide *ngFor="let c of carouselData">
+            <img src="assets/img/{{c.ImageReference}}" alt="{{c.Description}}">
+            <div class="carousel-caption">
+              <h3>{{c.Title}}</h3>
+              <p>{{c.Description}}</p>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+  </div>
+</div>
+

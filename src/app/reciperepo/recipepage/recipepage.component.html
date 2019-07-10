@@ -1,0 +1,65 @@
+<div class="container-fluid" style="background-color: white">
+  <div class="row">
+    <div class="col">
+      <div class="container">
+        <div class="row" style="margin-top:15px">
+          <div class="col"><button class="btn btn-primary" routerLink="/recipes">back</button></div>
+        </div>
+        <div class="row" style="margin-top:15px;">
+          <div class="col-md">
+            <img id="image" src="{{curRecipe.ImageReference}}" alt="{{curRecipe.Title}}">
+          </div>
+          <div class="col-md">
+            <div class="row">
+              <div class="col">
+                <h2>{{curRecipe.Title}}</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div id="stars">
+                  <span *ngFor="let star of [0,1,2,3,4]; index as i">
+                    <i class="fas fa-star" *ngIf="curRecipe.StarRating > i"></i>
+                    <i class="far fa-star" *ngIf="curRecipe.StarRating <= i"></i>
+                  </span>
+                </div>
+                <div id="reviews">{{curRecipe.Reviews}}</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>{{curRecipe.Description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col">
+              <h2 style="text-align: center;">Ingredients</h2>
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let i of curRecipe.Ingredients">
+                    <td>{{i.Measurement}}</td>
+                    <td>{{i.Name}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+                <h2 style="text-align: center;">Directions</h2>
+              <table class="table">
+                <tbody>
+                  <tr *ngFor="let d of curRecipe.Directions">
+                    <td>{{d.Step}}</td>
+                    <td>{{d.Value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

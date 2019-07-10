@@ -1,0 +1,82 @@
+<div id="content" class="container-fluid">
+  <div class="row">
+      <div class="col">
+          <button class="btn btn-primary" style="width:200px" (click)="open(Ingredient, {IngredientId: 0, MeasurementId: 1, AllergenId: 1, MeasurementType: '', Name: ''}, false)">new</button>
+        </div>
+  </div>
+  <div class="row">
+      <div class="col">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+          <tr>
+            <th width="50px"></th>
+            <th scope="col" sortable="Name" (sort)="onSort($event)">Name</th>
+            <th scope="col" sortable="MeasurementId" (sort)="onSort($event)">Measurement Type</th>
+            <th scope="col" sortable="AllergenId" (sort)="onSort($event)">Allergen Category</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let i of ingredients">
+            <td>
+              <i class="fas fa-pencil-alt" (click)="open(Ingredient, i, true)"></i>
+            </td>
+            <td>
+              {{i.Name}}
+            </td>
+            <td>{{i.MeasurementType}}</td>
+            <td>{{i.AllergenCategory}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+<ng-template #Ingredient let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{modalTitle}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="ingredientForm">
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Ingredient Name</label>
+            <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+            <div *ngIf="submitted && f.name.errors">
+              <div class="formError" *ngIf="f.name.errors.required">Ingredient name is required!</div>
+            </div>
+          </div>
+          <div class="form-group col">
+            <label>Measurement Type</label>
+              <select class="form-control" formControlName="measurement" [ngClass]="{ 'is-invalid': submitted && f.measurement.errors }">
+                <option value="{{m.MeasurementId}}" *ngFor="let m of measurements">{{m.Value}}</option>
+              </select>
+            <div *ngIf="submitted && f.measurement.errors">
+              <div class="formError" *ngIf="f.measurement.errors.required">Measurement type is required!</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label>Allergen Type</label>
+              <select class="form-control" formControlName="allergen" [ngClass]="{ 'is-invalid': submitted && f.allergen.errors }">
+                <option value="{{a.AllergenId}}" *ngFor="let a of allergens">{{a.Value}}</option>
+              </select>
+              <div *ngIf="submitted && f.allergen.errors">
+                <div class="formError" *ngIf="f.allergen.errors.required">Measurement type is required!</div>
+              </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" (click)="onSubmit(curIngredient)">Save</button>
+      <!--
+      <button type="submit" class="btn btn-outline-dark" (click)="editIngredient(curIngredient)" *ngIf="isEditing">Save</button>
+      <button type="submit" class="btn btn-outline-dark" (click)="testSubmit()" *ngIf="!isEditing">Save</button>
+      -->
+    </div>
+  </ng-template>

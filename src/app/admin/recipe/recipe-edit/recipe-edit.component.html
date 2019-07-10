@@ -1,0 +1,233 @@
+  <div class="container-fluid">
+      <div class="row">
+          <div id="options" class="col">
+            <button class="btn btn-primary" routerLink="/admin/recipelist">BACK</button>
+          </div>
+        </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-row">
+        <div class="form-group col">
+          <div class="form-row">
+              <div class="form-group col">
+                <div>
+                  <img id="image" src="{{curRecipe.ImageReference}}" alt="{{curRecipe.Title}}">
+                  <div id="imageUpload">
+                    <input type="file" accept="jpeg; jpg; png;" (change)="changeImage($event.target.files)">
+                  </div>
+                </div>
+              </div>
+            <div class="form-group col">
+              <div class="form-row">
+                <div class="form-group col">
+                  <label for="title">Title *</label>
+                  <input  type="text" class="form-control" name="title" [(ngModel)]="curRecipe.Title" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col">
+                  <label for="minutesReady">Total time ready in minutes *</label>
+                  <input type="number" class="form-control" name="minutesReady" [(ngModel)]="curRecipe.MinutesReady" required>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="form-group col">
+                  <label for="recommendedServings">Recommended Servings *</label>
+                  <input type="number" class="form-control" name="recommendedServings" [(ngModel)]="curRecipe.RecommendedServings" required>
+                </div>
+                <div class="form-group col">
+                  <label for="recommendedServings">Recommended Servings *</label>
+                  <ng-multiselect-dropdown-angular7
+                    [placeholder]="'custom placeholder'"
+                    [data]="dishTypeDropdown"
+                    [(ngModel)]="curRecipe.DishTypes"
+                    [settings]="dropdownSettings"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    name="dishTypes"
+                    >
+                    </ng-multiselect-dropdown-angular7>
+                </div>
+                <!--
+                <div class="form-group col">
+                  <label for="cuisine">Cuisine</label>
+                    <select name="cuisine" class="form-control" [(ngModel)]="curRecipe.CuisineId">
+                      <option value="{{c.CuisineId}}" *ngFor="let c of allergens">{{c.Style}} {{c.Origin}}</option>
+                    </select>
+                </div>
+              -->
+              </div>
+              <div class="form-group row">
+                <div class="form-group col">
+                  <label for="description">Description *</label>
+                  <textarea id="description" class="form-control" name="description" [(ngModel)]="curRecipe.Description" maxlength="1000"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col">
+                <div class="row">
+                  <div class="col tableColCenter">
+                    Directions
+                  </div>
+                </div>
+                <table class="table table-hover">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th width="100px"></th>
+                      <th scope="col">Step</th>
+                      <th scope="col">Direction</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let d of curRecipe.Directions; index as index">
+                      <td>
+                        <i class="fas fa-pencil-alt" (click)="editDirection(Direction, index)"></i>
+                        &nbsp;
+                        <i class="fas fa-trash-alt" (click)="removeDirection(index)"></i>
+                      </td>
+                      <td class="tableColCenter">
+                        {{d.Step}}
+                      </td>
+                      <td>
+                        {{d.Value}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-primary" style="margin-left:50%;" (click)="newDirection(Direction)">+</button>
+            </div>
+          </div>
+        </div>
+      <div class="form-group col">
+        <div class="form-row">
+          <div class="form-group col">
+            <table class="table table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th width="100px"></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Measurement</th>
+                  <th scope="col">Measurement Type</th>
+                  <th scope="col">Misc Instructions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of curRecipe.Ingredients; index as index">
+                  <td>
+                    <i class="fas fa-pencil-alt" (click)="editIngredient(Ingredient, index)"></i>
+                    &nbsp;
+                    <i class="fas fa-trash-alt" (click)="removeIngredient(index)"></i>
+                  </td>
+                  <td class="tableColCenter">
+                    {{i.Name}}
+                  </td>
+                  <td class="tableColCenter">
+                    {{i.Measurement}}
+                  </td>
+                  <td class="tableColCenter">
+                    {{i.MeasurementType}}
+                  </td>
+                  <td>
+                    {{i.MiscInstructions}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-primary" style="margin-left:50%;" (click)="newIngredient(Ingredient)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div  *ngIf="loading">
+      <span>Loading...</span>
+      <img src="assets/img/loading.gif" style="height:75px">
+    </div>
+    <button type="button" class="btn btn-outline-dark" (click)="saveRecipe()">Save</button>
+  </div>
+</div>
+
+<ng-template #Ingredient let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Ingredient</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="ingredientName">Ingredient Name</label>
+            <ng-multiselect-dropdown-angular7
+                    [placeholder]="'custom placeholder'"
+                    [data]="IngredientDropdown"
+                    [(ngModel)]="curIngredient"
+                    [settings]="IngredientDropdownSettings"
+                    (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    name="dishTypes"
+                    >
+                    </ng-multiselect-dropdown-angular7>
+            <!--<input id="ingredientName" name="ingredientName" type="text" class="form-control" [(ngModel)]="curIngredient.Name" [ngbTypeahead]="search" (focusout)="fillNewIngredientMeasurementType()"/>-->
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="measurement">Measurement</label>
+            <input id="number" class="form-control" name="measurement" [(ngModel)]="curIngredient.Measurement">
+          </div>
+          <div class="form-group col">
+            <label for="measurementType">Measurement Type</label>
+            <input id="measurementType" class="form-control" name="measurementType" [(ngModel)]="curIngredient.MeasurementType" disabled>
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+              <label for="miscInstructions">Misc Instructions</label>
+              <input id="text" class="form-control" name="miscInstructions" [(ngModel)]="curIngredient.MiscInstructions" placeholder="diced, packed, minced, etc.">
+            </div>
+          </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="addNewIngredient(curIngredient)" *ngIf="!isEditing">Save</button>
+      <button type="button" class="btn btn-outline-dark" (click)="closeModal()" *ngIf="isEditing">Save</button>
+    </div>
+  </ng-template>
+
+  <ng-template #Direction let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Directions</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeDirectionModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="directions" *ngIf="!isEditing">Step {{curDirectionStep}} Direction</label>
+              <label for="directions" *ngIf="isEditing">Step {{curDirection.Step}} Direction</label>
+              <textarea id="directions" name="directions" type="text" class="form-control" [(ngModel)]="curDirection.Value"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="addNewDirection(curDirection)" *ngIf="!isEditing">Save</button>
+        <button type="button" class="btn btn-outline-dark" (click)="closeModal()" *ngIf="isEditing">Save</button>
+      </div>
+    </ng-template>

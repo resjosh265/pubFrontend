@@ -1,0 +1,21 @@
+<div id="container" fxLayout="row wrap" fxLayoutAlign="space-around">
+  <div class="card" *ngFor="let r of recipes" fxFlex="0 1 calc(25% - 30px)" [routerLink]="['/recipe', r.RecipeId]">
+    <img class="card-img-top" src="{{r.ImageReference}}" alt="Card image cap">
+    <span class="card-title">{{r.Title}}</span>
+    <div class="card-body">
+      
+      <p class="card-text" placement="bottom" ngbTooltip="{{r.Description}}" [openDelay]="500">{{r.Description | slice: 0 : 150}}<span *ngIf="r.Description.length > 200">...</span></p>
+      
+    </div>
+    <div class="card-footer">
+        <!--<button class="btn btn-primary">Plan it!</button>-->
+        <div id="stars">
+          <span *ngFor="let star of [0,1,2,3,4]; index as i">
+            <i class="fas fa-star" *ngIf="r.StarRating > i"></i>
+            <i class="far fa-star" *ngIf="r.StarRating <= i"></i>
+          </span>
+          <span id="reviews">{{r.Reviews}}</span>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+body{
+    background-color: #444444;
+}
+
+html{
+    overflow-x: hidden;
+}
+
+/*This controls ng bootstrap modal width*/
+.recipeModal > .modal-dialog {
+    max-width: 90% !important;
+    min-width: 20% !important;   
+    width: 100% !important;
+}
+
+.formError{
+    color: #ff6d6d;
+    font-size: 12px;
+    text-align: center;
+}
+
+.modaltest{
+    width: 100%!important;
+}

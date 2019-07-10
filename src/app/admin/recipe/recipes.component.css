@@ -1,0 +1,44 @@
+table{
+    background-color:whitesmoke;
+    width: 90%;
+    margin: 30px auto 30px auto;
+}
+
+.btn{
+    margin-top: 30px;
+}
+
+#content{
+    background-color: whitesmoke;
+}
+
+#stars{
+    float:left;
+}
+
+.fas.fa-star{
+    color:gold;
+}
+
+#rating{
+    margin: auto 0px auto 15px;
+    width: 300px;
+}
+
+#image{
+    width:100%;
+    height:400px;
+    object-fit:cover;
+}
+
+th{
+    text-align: center;
+}
+
+.tableColCenter{
+    text-align: center;
+}
+
+#header-right{
+    float: right;
+}

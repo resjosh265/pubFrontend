@@ -1,0 +1,21 @@
+table{
+    background-color:whitesmoke;
+    width: 90%;
+    margin: 30px auto 30px auto;
+}
+
+@media only screen and (max-width: 364px){
+    table{
+        margin-left:-8px;
+    }
+}
+
+.btn{
+    margin-top: 30px;
+}
+
+#content{
+    background-color: whitesmoke;
+}
+
+
